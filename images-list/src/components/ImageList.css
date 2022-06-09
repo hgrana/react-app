@@ -1,0 +1,10 @@
+.image-list {
+  position: relative;
+  display: inline-block;
+}
+
+.image-list img {
+  width: 250px;
+  top: 0;
+  float: left;
+}
