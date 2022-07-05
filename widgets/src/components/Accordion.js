@@ -4,6 +4,12 @@ const Accordion = (props) => {
   const [ activeIndex, setActiveIndex ] = useState(null);
 
   const onTitleClick = (index) => {
+    if (index === activeIndex) {
+      setActiveIndex(null);
+
+      return;
+    }
+
     setActiveIndex(index)
   }
 
