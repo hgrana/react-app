@@ -4,9 +4,18 @@ import WikipediaAPI from '../api/wikipedia'
 const Search = () => {
   const [ term, setTerm ] = useState('');
   const [ results, setResults ] = useState([]);
+
   const renderedResults = results.map((result, index) => {
     return (
       <div className='item' key={index}>
+        <div className='right floated content'>
+          <a
+            className='ui button'
+            href={`https://en.wikipedia.org?curid=${result.pageid}`}
+          >
+            go
+          </a>
+        </div>
         <div className='content'>
           <div className='header'>
             {result.title}
@@ -17,15 +26,20 @@ const Search = () => {
     );
   })
 
+  // searching in wikpedia
   useEffect(() => {
     if (term === '') return;
 
-    (
-      async () => {
-        const data = await WikipediaAPI.Search(term);
-        setResults(data.query.search);
-      }
-    )();
+    const timeoutId = setTimeout(() => {
+      (
+        async () => {
+          const data = await WikipediaAPI.Search(term);
+          setResults(data.query.search);
+        }
+      )();
+    }, 500);
+
+    return () => clearTimeout(timeoutId)
   }, [ term ]);
 
   const onTextChange = (textValue) => {
